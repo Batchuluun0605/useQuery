@@ -7,7 +7,8 @@ export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const filterRef = useRef("");
+  const foodSearch = searchParams.get("sort");
+  const filterRef = useRef("bugd");
 
   const filter = useCallback(
     (name: string, value: string) => {
@@ -22,8 +23,10 @@ export default function Home() {
     filterRef.current = e.target.value;
     router.push(pathname + "?" + filter("sort", e.target.value));
   };
+  console.log(searchParams.get("sort"));
+
   const filterData = mockData.filter((el) => {
-    return filterRef.current == "" ? el : el.name.includes(filterRef.current);
+    return foodSearch == "bugd" ? el : el.name == foodSearch;
   });
 
   return (
@@ -38,7 +41,7 @@ export default function Home() {
           id="1"
           className="p-3 border-yellow-600 border-2 rounded-xl"
         >
-          <option value="">bugd</option>
+          <option value="bugd">bugd</option>
           <option value="burger">burger</option>
           <option value="pizza">pizza</option>
         </select>
